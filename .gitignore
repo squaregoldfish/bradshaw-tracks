@@ -35,3 +35,5 @@ vignettes/*.pdf
 # Vim
 .*.swp
 
+# Make files
+Makefile
