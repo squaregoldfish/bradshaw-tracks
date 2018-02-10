@@ -2,7 +2,8 @@
 library(ncdf4)
 
 # PARAMETERS
-PCO2_FILE <- "/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/daily.nc"
+OUTPUT_ROOT <- as.vector(read.table("output_root.txt")[[1]])
+PCO2_FILE <- paste(OUTPUT_ROOT, "/daily.nc", sep="")
 PCO2_VAR <- "pco2"
 TIME_LENGTH <- 11680
 
@@ -76,24 +77,20 @@ for (time_loop in 1:TIME_LENGTH) {
     }
 }
 
-cat("\n")
-
-cat("Calculating means\n")
 pco2_spatial_variation <- array(NA, c(LON_LENGTH, LAT_LENGTH, LON_LENGTH, LAT_LENGTH))
 for (lon_loop1 in 1:LON_LENGTH) {
-#for (lon_loop1 in 18:18) {
-    cat("Calculating mean for", lon_loop1, "\n")
     for (lat_loop1 in 1:LAT_LENGTH) {
+        cat("\rCalculating means for",lon_loop1, lat_loop1,"               ")
         for (lon_loop2 in 1:LON_LENGTH) {
             for (lat_loop2 in 1:LAT_LENGTH) {
                 if (spatial_variations_count[lon_loop1, lat_loop1, lon_loop2, lat_loop2] > 0) {
                     pco2_spatial_variation[lon_loop1, lat_loop1, lon_loop2, lat_loop2] <- spatial_variations_total[lon_loop1, lat_loop1, lon_loop2, lat_loop2] / spatial_variations_count[lon_loop1, lat_loop1, lon_loop2, lat_loop2]
-cat(lon_loop1, lat_loop1, lon_loop2, lat_loop2,pco2_spatial_variation[lon_loop1, lat_loop1, lon_loop2, lat_loop2],"\n")
                 }
             }
         }
     }
 }
 
-cat("Writing output data\n")
-save(pco2_spatial_variation, file="/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/pco2_spatial_variation.R")
+cat("\rWriting output data...")
+save(pco2_spatial_variation, file=paste(OUTPUT_ROOT, "/pco2_spatial_variation.R", sep=""))
+cat("\n")
