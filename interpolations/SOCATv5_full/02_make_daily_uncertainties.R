@@ -1,5 +1,6 @@
 # Add uncertainty time series files alongside the actual time series
-SERIES_DIR <- "/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/cell_series_daily"
+OUTPUT_ROOT <- as.vector(read.table("output_root.txt")[[1]])
+SERIES_DIR <- paste(OUTPUT_ROOT, "/cell_series_daily", sep="")
 SERIES_LENGTH <- 11680
 
 for (lon in 1:144) {

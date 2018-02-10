@@ -2,11 +2,12 @@
 library(ncdf4)
 
 # PARAMETERS
-IN_DIR <- "/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/cell_series_daily"
+OUTPUT_ROOT <- as.vector(read.table("output_root.txt")[[1]])
+IN_DIR <- paste(OUTPUT_ROOT, "/cell_series_daily", sep="")
 LON_CELL_SIZE <- 2.5
 LAT_CELL_SIZE <- 2.5
 DATES_FILE <- "days.csv"
-OUT_FILE <- "/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/daily.nc"
+OUT_FILE <- paste(OUTPUT_ROOT, "/daily.nc", sep="")
 
 # Build lons
 lons <- vector(mode="numeric", length=(360 / LON_CELL_SIZE))
