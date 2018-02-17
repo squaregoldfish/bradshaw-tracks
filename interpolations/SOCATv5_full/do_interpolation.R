@@ -40,6 +40,8 @@ SPATIAL_ACF_LAG_STEP <- 25
 EARTH_RADIUS <- 6367.5
 SPATIAL_INTERP_WEIGHT_LIMIT <- 0.367879
 
+OUTPUT_ROOT <- as.vector(read.table("output_root.txt")[[1]])
+
 ##########################################################
 
 # Calculate the values for temporal interpolation.
@@ -51,7 +53,6 @@ calcTemporalInterpolationValues <- function(series, series_weights, series_uncer
     interpolated_points <- array(NA, c(length(series), 3))
 
     for (i in 1:length(series)) {
-    #for (i in 6451:6451) {
         if (is.na(series[i])) {
             interp_start <- i - TEMPORAL_INTERPOLATION_LIMIT
             if (interp_start < 1) {
@@ -208,7 +209,7 @@ if (file.exists(final_curve_file)) {
 } else {
     # Load background data
     load("mean_directional_acfs.R")
-    load("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/pco2_spatial_variation.R")
+    load(paste(OUTPUT_ROOT, "/pco2_spatial_variation.R", sep=""))
     temporal_acf <- read.csv("mean_temporal_acf.csv")[[2]]
 
     nc <- nc_open("/usr/local/ferret_data/data/etopo60.cdf")

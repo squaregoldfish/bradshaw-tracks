@@ -1,6 +1,9 @@
 #!/usr/bin/tclsh
 
-set dir "/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/interpolation_outputs/[lindex $argv 0]"
+set chan [open "output_root.txt"]
+set outputRoot [string trim [read $chan]]
+close $chan
+set dir "${outputRoot}/interpolation_outputs/[lindex $argv 0]"
 
 set cellCount 0
 set cellTotal 10368.0
