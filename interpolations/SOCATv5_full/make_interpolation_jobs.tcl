@@ -1,6 +1,9 @@
 #!/usr/bin/tclsh
 
-set outputDirRoot "/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/interpolation_outputs"
+set chan [open "output_root.txt"]
+set outputRoot [string trim [read $chan]]
+close $chan
+set outputDirRoot "${outputRoot}/interpolation_outputs"
 
 set indir [lindex $argv 0]
 set outdir [lindex $argv 1]
