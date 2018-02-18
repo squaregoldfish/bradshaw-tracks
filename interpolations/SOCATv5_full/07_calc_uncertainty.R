@@ -1,4 +1,5 @@
 # R!
+OUTPUT_ROOT <- as.vector(read.table("output_root.txt")[[1]])
 
 getPrevValue <- function(series, start) {
 
@@ -43,10 +44,10 @@ for (lon in 1:144) {
         cat("\r",lon,lat,"    ")
 
         # Load data
-        measurements_file <- paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/spline_output/measurements_",lon,"_",lat,".csv",sep="")
-        uncertainties_file <- paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/spline_output/uncertainty_",lon,"_",lat,".csv",sep="")
-        curve_file <- paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/spline_output/curve_",lon,"_",lat,".csv",sep="")
-        spline_file <- paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/spline_output/spline_",lon,"_",lat,".csv",sep="")
+        measurements_file <- paste(OUTPUT_ROOT, "/spline_output/measurements_",lon,"_",lat,".csv",sep="")
+        uncertainties_file <- paste(OUTPUT_ROOT, "/spline_output/uncertainty_",lon,"_",lat,".csv",sep="")
+        curve_file <- paste(OUTPUT_ROOT, "/spline_output/curve_",lon,"_",lat,".csv",sep="")
+        spline_file <- paste(OUTPUT_ROOT, "/spline_output/spline_",lon,"_",lat,".csv",sep="")
 
         if (file.exists(curve_file)) {
             measurements <- read.csv(measurements_file,header=F)[[2]]
@@ -127,11 +128,11 @@ for (lon in 1:144) {
             }
 
             # Copy the spline file to the output
-            file.copy(spline_file, paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/uncertainty_output/spline_",lon,"_",lat,".csv",sep=""))
-            file.copy(measurements_file, paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/uncertainty_output/measurements_",lon,"_",lat,".csv",sep=""))
+            file.copy(spline_file, paste(OUTPUT_ROOT, "/uncertainty_output/spline_",lon,"_",lat,".csv",sep=""))
+            file.copy(measurements_file, paste(OUTPUT_ROOT, "/uncertainty_output/measurements_",lon,"_",lat,".csv",sep=""))
             
             # Write the uncertainties
-            sink(paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/uncertainty_output/uncertainty_",lon,"_",lat,".csv",sep=""))
+            sink(paste(OUTPUT_ROOT, "/uncertainty_output/uncertainty_",lon,"_",lat,".csv",sep=""))
             for (i in 1:length(all_uncertainties)) {
                 cat(i,",",all_uncertainties[i],"\n",sep="")
             }
