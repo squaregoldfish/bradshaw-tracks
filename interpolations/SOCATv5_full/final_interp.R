@@ -1,6 +1,8 @@
 # R!
 library(ncdf4)
 
+OUTPUT_ROOT <- as.vector(read.table("output_root.txt")[[1]])
+
 LON_SIZE <- 144
 LAT_SIZE <- 72
 LON_CELL_SIZE <- 2.5
@@ -320,10 +322,9 @@ nc_close(nc)
 
 
 load("mean_directional_acfs.R")
-load("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/pco2_spatial_variation.R")
+load(paste(OUTPUT_ROOT, "/pco2_spatial_variation.R", sep=""))
 
 cat("done\n")
-
 
 failed_count <- 1000000
 last_failed_count <- 0
@@ -335,22 +336,19 @@ while (failed_count > 0) {
     # Reset the failure counter
     last_failed_count <- failed_count
     failed_count <- 0
-    dir.create("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/final_output")
+    dir.create(paste(OUTPUT_ROOT, "/final_output", sep=""))
 
     for (lon in 1:144) {
-    #for (lon in 2:2) {
         for (lat in 1:72) {
-        #for (lat in 36:36) {
 
             # Set up filenames
             in_spline_file <- paste("/tmp/final_interp_input/spline_",lon,"_",lat,".csv",sep="")
             in_uncertainties_file <- paste("/tmp/final_interp_input/uncertainty_",lon,"_",lat,".csv",sep="")
 
-            out_series_file <- paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/final_output/spline_",lon,"_",lat,".csv",sep="")
-            out_uncertainties_file <- paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/final_output/uncertainty_",lon,"_",lat,".csv",sep="")
+            out_series_file <- paste(OUTPUT_ROOT, "/final_output/spline_",lon,"_",lat,".csv",sep="")
+            out_uncertainties_file <- paste(OUTPUT_ROOT, "/final_output/uncertainty_",lon,"_",lat,".csv",sep="")
 
             cat("\r",lon,lat," ")
-
 
             # If the output file already exists, we don't need to process this cell
             if (!file.exists(out_series_file)) {
@@ -438,10 +436,10 @@ while (failed_count > 0) {
     } else {
 
         # Copy the output files back into the input for the next round
-        for (i in list.files("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/final_output")) {
-            file.rename(paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/final_output/",i,sep=""), paste("/tmp/final_interp_input/",i,sep=""))
+        for (i in list.files(paste(OUTPUT_ROOT, "/final_output", sep=""))) {
+            file.rename(paste(OUTPUT_ROOT, "/final_output/", i, sep=""), paste("/tmp/final_interp_input/", i, sep=""))
         }
-        unlink("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/final_output", recursive=TRUE)
+        unlink(paste(OUTPUT_ROOT, "/final_output", sep=""), recursive=TRUE)
     }
 }
 
@@ -465,8 +463,8 @@ for (lon in 1:144) {
         in_spline_file <- paste("/tmp/final_interp_input/spline_",lon,"_",lat,".csv",sep="")
         in_uncertainties_file <- paste("/tmp/final_interp_input/uncertainty_",lon,"_",lat,".csv",sep="")
 
-        out_series_file <- paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/final_output/spline_",lon,"_",lat,".csv",sep="")
-        out_uncertainties_file <- paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/final_output/uncertainty_",lon,"_",lat,".csv",sep="")
+        out_series_file <- paste(OUTPUT_ROOT, "/final_output/spline_",lon,"_",lat,".csv",sep="")
+        out_uncertainties_file <- paste(OUTPUT_ROOT, "/final_output/uncertainty_",lon,"_",lat,".csv",sep="")
 
         if (file.exists(in_spline_file)) {
             #We already have a complete time series for this cell - just copy the files
@@ -549,4 +547,3 @@ for (lon in 1:144) {
 }
 
 cat("\n")
-
