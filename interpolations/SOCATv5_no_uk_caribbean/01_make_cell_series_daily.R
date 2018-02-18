@@ -1,4 +1,5 @@
 # NB REQUIRES THAT ALL HEADER LINES ARE REMOVED.
+OUTPUT_ROOT <- as.vector(read.table("output_root.txt")[[1]])
 
 MONTH_STARTS <- c(0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334)
 LEAP_MONTH_STARTS <- c(0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335)
@@ -183,7 +184,7 @@ for (lon in 1:144) {
         }
 
         
-        out_file <- paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_no_uk_caribbean/cell_series_daily/cell_series_",lon,"_",lat,".csv",sep="")
+        out_file <- paste(OUTPUT_ROOT, "/cell_series_daily/cell_series_",lon,"_",lat,".csv",sep="")
         sink(out_file)
         for (i in 1:11680) {
             cat(i,",",output[i],"\n",sep="")
