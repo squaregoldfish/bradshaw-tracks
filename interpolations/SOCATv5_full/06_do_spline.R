@@ -1,4 +1,6 @@
 # R
+OUTPUT_ROOT <- as.vector(read.table("output_root.txt")[[1]])
+
 MONTH_START_DAYS <- c(0, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366)
 
 makeCurve <- function(params, series_length, per_year) {
@@ -154,22 +156,22 @@ for (lon in 1:144) {
 
         cat("\r",lon,lat,"     ")
 
-        spline_file <- paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/spline_output/spline_",lon,"_",lat,".csv",sep="")
-        month_curve_file <- paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/spline_output/curve_",lon,"_",lat,".csv",sep="")
-        month_meas_file <- paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/spline_output/measurements_",lon,"_",lat,".csv",sep="")
-        uncertainty_file <- paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/spline_output/uncertainty_",lon,"_",lat,".csv",sep="")
+        spline_file <- paste(OUTPUT_ROOT, "/spline_output/spline_",lon,"_",lat,".csv",sep="")
+        month_curve_file <- paste(OUTPUT_ROOT, "/spline_output/curve_",lon,"_",lat,".csv",sep="")
+        month_meas_file <- paste(OUTPUT_ROOT, "/spline_output/measurements_",lon,"_",lat,".csv",sep="")
+        uncertainty_file <- paste(OUTPUT_ROOT, "/spline_output/uncertainty_",lon,"_",lat,".csv",sep="")
 
         file.remove(spline_file)
         file.remove(month_curve_file)
         file.remove(month_meas_file)
         file.remove(uncertainty_file)
 
-        params_file <- paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/interpolation_outputs/output7/cell_params_",lon,"_",lat,".csv",sep="")
+        params_file <- paste(OUTPUT_ROOT, "/interpolation_outputs/final_interpolation_output/cell_params_",lon,"_",lat,".csv",sep="")
         if (file.exists(params_file)) {
 
-            measurements <- read.csv(paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/interpolation_outputs/output7/cell_series_",lon,"_",lat,".csv",sep=""),header=F)[[2]]
-            uncertainties <- read.csv(paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/interpolation_outputs/output7/cell_uncertainties_",lon,"_",lat,".csv",sep=""),header=F)[[2]]
-            curve_params <- read.csv(paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/interpolation_outputs/output7/cell_params_",lon,"_",lat,".csv",sep=""),header=F)[[1]]
+            measurements <- read.csv(paste(OUTPUT_ROOT, "/interpolation_outputs/final_interpolation_output/cell_series_",lon,"_",lat,".csv",sep=""),header=F)[[2]]
+            uncertainties <- read.csv(paste(OUTPUT_ROOT, "/interpolation_outputs/final_interpolation_output/cell_uncertainties_",lon,"_",lat,".csv",sep=""),header=F)[[2]]
+            curve_params <- read.csv(paste(OUTPUT_ROOT, "/interpolation_outputs/final_interpolation_output/cell_params_",lon,"_",lat,".csv",sep=""),header=F)[[1]]
 
             curve <- makeCurve(curve_params, length(measurements) / 365 * 12, 12)
             monthly_measurements <- makeMonthly(measurements)
@@ -212,4 +214,3 @@ for (lon in 1:144) {
 }
 
 cat("\n")
-
