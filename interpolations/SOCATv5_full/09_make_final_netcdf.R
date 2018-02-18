@@ -1,6 +1,8 @@
 # R!
 library(ncdf4)
 
+OUTPUT_ROOT <- as.vector(read.table("output_root.txt")[[1]])
+
 MONTH_STARTS <- c(0.000, 0.085, 0.162, 0.247, 0.329, 0.414, 0.496, 0.581, 0.666, 0.748, 0.833, 0.915)
 START_YEAR <- 1985
 
@@ -44,7 +46,7 @@ for (lon_loop in 1:LON_SIZE) {
     cat("\r",lon_loop,"   ")
     for (lat_loop in 1:VALID_LAT_SIZE) {
 
-        pco2_file <- paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/final_output/spline_",lon_loop,"_",lat_loop,".csv",sep="")
+        pco2_file <- paste(OUTPUT_ROOT, "/final_output/spline_",lon_loop,"_",lat_loop,".csv",sep="")
         if (file.exists(pco2_file)) {
             cell_pco2 <- read.csv(pco2_file, header=F)[[2]]
 
@@ -53,7 +55,7 @@ for (lon_loop in 1:LON_SIZE) {
             }
         }
 
-        uncertainty_file <- paste("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/final_output/uncertainty_",lon_loop,"_",lat_loop,".csv",sep="")
+        uncertainty_file <- paste(OUTPUT_ROOT, "/final_output/uncertainty_",lon_loop,"_",lat_loop,".csv",sep="")
         if (file.exists(uncertainty_file)) {
             cell_uncertainty <- read.csv(uncertainty_file, header=F)[[2]]
 
@@ -75,7 +77,7 @@ time_dim <- ncdim_def("time", "year", times, unlim=TRUE)
 pco2_var <- ncvar_def("fco2", "uatm", list(lon_dim, lat_dim, time_dim), -1e35, prec="double")
 uncertainty_var <- ncvar_def("uncertainty", "uatm", list(lon_dim, lat_dim, time_dim), -1e35, prec="double")
 
-nc <- nc_create("/Data/Scratch/science/bradshaw-tracks/interpolations/SOCATv5_full/fco2.nc", list(pco2_var, uncertainty_var))
+nc <- nc_create(paste(OUTPUT_ROOT, "/fco2.nc", sep=""), list(pco2_var, uncertainty_var))
 ncvar_put(nc, pco2_var, pco2)
 ncvar_put(nc, uncertainty_var, uncertainties)
 #ncatt_put(nc, "time", "calendar", "noleap")
