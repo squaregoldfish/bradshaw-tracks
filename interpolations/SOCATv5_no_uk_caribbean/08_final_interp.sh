@@ -1,1 +1,0 @@
-../SOCATv5_full/08_final_interp.sh

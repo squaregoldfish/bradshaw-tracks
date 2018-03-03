@@ -1,1 +1,0 @@
-../SOCATv5_full/sea.nc
