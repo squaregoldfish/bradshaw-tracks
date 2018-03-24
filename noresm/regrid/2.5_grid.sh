@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Regrid NorESM files onto a 0.01°x0.01° grid
-# for spatial autocorrelation analysis
+# Regrid NorESM files onto a 2.5°x2.5° grid
+# for interpolation method
 
 indir=$1
 outfile=$2
