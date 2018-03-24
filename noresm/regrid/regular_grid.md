@@ -1,4 +1,4 @@
-# Converting original grid to regular grid
+# Converting original grid to 1°x1° regular grid
 
 ## Trim duplicate latitude
 The model files have 385 latitudes, but the last latitude is a duplicate. Use ferret to remove it:
