@@ -1,0 +1,4 @@
+use "/tmp/1deg.nc"
+let sst_fixed = sst * (1 / frac_b)
+save/clobber/file="/tmp/sst_fixed.nc" sst_fixed
+quit
