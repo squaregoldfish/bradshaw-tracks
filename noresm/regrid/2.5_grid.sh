@@ -19,10 +19,9 @@ for f in `find $indir`
 do
     filename=`basename $f`
     echo $filename
-	cdo remapbil,r144x72 $f "/tmp/regrid/${filename}"
+	cdo remapbil,2.5_grid.txt $f "/tmp/regrid/${filename}"
 done
 
 ncrcat /tmp/regrid/*nc "${outfile}"
 
 rm -rf /tmp/regrid
-
