@@ -43,7 +43,7 @@ proc getDateIndex {year month day} {
     set index ""
     set dayIndex 0
 
-    if {$year >= 1985 && $year <= 2015} {
+    if {$year >= $::START_YEAR && $year <= $::END_YEAR} {
         if {[isLeapYear $year]} {
             set dayIndex [getDayIndex $jdate $::DAY_STARTS]
         } else {
