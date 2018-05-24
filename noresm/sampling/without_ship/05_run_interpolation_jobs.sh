@@ -1,9 +1,9 @@
 #!/bin/bash
 
-track=$1
-indir=$2
-outdir=$3
-threads=$4
+threads=$1
+track=$2
+indir=$3
+outdir=$4
 
 if [ -z $track ] || [ -z $indir ] || [ -z $outdir ] || [ -z $threads ]
 then
