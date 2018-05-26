@@ -1,0 +1,1 @@
+/Data/Scratch/science/NorESM_regridded/historical/2.5x2.5/pco2.nc
