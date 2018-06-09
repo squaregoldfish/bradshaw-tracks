@@ -7,7 +7,7 @@ outdir=$4
 
 if [ -z $track ] || [ -z $indir ] || [ -z $outdir ] || [ -z $threads ]
 then
-	echo "Usage: 05_run_interpolation_jobs.sh <track> <indir> <outdir> <threads>"
+	echo "Usage: 05_run_interpolation_jobs.sh <threads> <track> <indir> <outdir>"
 	exit
 fi
 
