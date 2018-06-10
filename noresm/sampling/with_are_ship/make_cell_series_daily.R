@@ -11,7 +11,7 @@ for (arg in commandArgs()) {
 }
 
 MODEL_FILE <- as.vector(read.table("model_file.txt")[[1]])
-SAMPLE_FILE <- paste(as.vector(read.table("output_root.txt")[[1]]), "/", track, "/SOCATv5_indices.tsv", sep="")
+SAMPLE_FILE <- paste(as.vector(read.table("output_root.txt")[[1]]), "/", track, "/SOCATv5_indices_with_are_ship.tsv", sep="")
 OUTPUT_ROOT <- paste(as.vector(read.table("output_root.txt")[[1]]), "/", track, "/with_are_ship", sep="")
 
 cat("Reading model file...")
