@@ -2,7 +2,7 @@
 
 track="$1"
 
-OUTPUT_ROOT="`cat output_root.txt|xargs`/$track/without_ship"
+OUTPUT_ROOT="`cat output_root.txt|xargs`/$track/with_are_ship"
 
 echo "Removing old input..."
 rm -r /tmp/final_interp_input
