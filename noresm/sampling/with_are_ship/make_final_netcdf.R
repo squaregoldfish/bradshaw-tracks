@@ -19,7 +19,7 @@ START_YEAR <- 1985
 LON_SIZE <- 144
 LAT_SIZE <- 72
 VALID_LAT_SIZE <- 72
-TIME_SIZE <- 372
+TIME_SIZE <- 384
 
 
 lons <- vector(mode="numeric", length=LON_SIZE)
